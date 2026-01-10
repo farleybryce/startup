@@ -58,7 +58,7 @@ I am going to use the required technologies in the following ways.
 - **HTML** - Uses HTML structure for the three pages of the application. 
 - **CSS** - Styling to give the website an appealing look. Use of color, whitespace, font, etc.
 - **React** - Allows for login, displaying new definitions, words in definitions to be clicked on, and switching between pages.
-- **Service** - Fetching the definition using https://api.dictionaryapi.dev/api/v2/entries/en/<word> or a similar api. Used for regestering, logging in, and logging out users. Submitting and retrieving scores and daily challenges.
+- **Service** - Fetching the definition using https://api.dictionaryapi.dev/api/v2/entries/en/<word> or a similar api. Used for registering, logging in, and logging out users. Submitting and retrieving scores and daily challenges.
 - **DB/Login** - Stores authentication informaiton, users, target words, and scores in a database.
 - **WebSocket** - Users can see what word other users are currently on in realtime.
 
