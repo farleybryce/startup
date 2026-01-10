@@ -36,8 +36,11 @@ The website features three pages, a login page, a gameplay page, and a leaderboa
 ```mermaid
 sequenceDiagram
     actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor Friend
+    You->>Server: your word
+    Friend->>Server: friend's word
+    Server-->>You: friend's word
+    Server-->>Friend: your word
 ```
 
 ### Key features
