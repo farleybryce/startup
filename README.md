@@ -29,9 +29,9 @@ Do you enjoy word games, but want a game that tests your knowledge of word meani
 
 ### Design
 
-![Design image](startup_design.jpg)
+![Design image](startup_design1.jpg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The website features three pages, a login page, a gameplay page, and a leaderboard page. The login page features boxes to enter a username and password. The gameplay page displays the starting word and target word. Below these is the currently selected word along with it's phonetic spelling and definitions. Underneath the definitions is a display showing other players that are online and their current word. At the top of the page is a small navigation bar to select the leaderboard page. The leaderboard page shows a ranking of all the players.
 
 ```mermaid
 sequenceDiagram
