@@ -45,9 +45,11 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Ability to choose which word in the definitions to link to
+- Ability to view the current words of other users in realtime
+- Generation of a new puzzle/game every day
+- Leaderboard displaying player rankings
 
 ### Technologies
 
