@@ -25,7 +25,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Do you enjoy word games, but want a game that tests your knowledge of word meaning rather than orthography. This game lets you traverse the English language by accessing words through definitions by attempting to reach a target word from a starting word. This game allows you to explore how words are connected, learn new definitions, and expand your vocabulary. In a way, you are trying to prove that a target word helps to define a starting word even if it would appear that the two words are unrelated.
 
 ### Design
 

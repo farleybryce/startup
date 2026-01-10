@@ -1,0 +1,5 @@
+{
+    "scm.diffDecorations": "all",
+    "scm.diffDecorationsGutterAction": "diff",
+    "git.decorations.enabled": true
+}
