@@ -1,5 +1,6 @@
 {
     "scm.diffDecorations": "all",
     "scm.diffDecorationsGutterAction": "diff",
-    "git.decorations.enabled": true
+    "git.decorations.enabled": true,
+    "liveServer.settings.port": 5501
 }
