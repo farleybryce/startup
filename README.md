@@ -72,15 +72,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I have four html pages: login, gameplay, leaderboard, and how to play.
+- [x] **Proper HTML element usage** - I used different elements including paragraph, header, title, etc.
+- [x] **Links** - Every page can be accessed from every other page through links in the header.
+- [x] **Text** - There is a paragraph of text explaining the game. The words in the game are also text.
+- [x] **3rd party API placeholder** - Placeholder for a dicitonary api call.
+- [x] **Images** - There is an image in both the head and navigation section.
+- [x] **Login placeholder** - The home page has a place to log in.
+- [x] **DB data placeholder** - The leaderboard uses information stored in a database.
+- [x] **WebSocket placeholder** - The game page has a place for websocket information about other player's words.
 
 ## 🚀 CSS deliverable
 
