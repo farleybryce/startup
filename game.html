@@ -8,6 +8,11 @@
     <link rel="icon" href="book.png" />
 
     <link rel="stylesheet" href="main.css"/>
+    <link rel="stylesheet" href="game.css"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" 
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" 
@@ -37,9 +42,11 @@
         <br>
         <span>Start &#8594 Target</span>
         <br>
-        <span>dictionary</span>
-        <span>dɪkʃəˌnɛɹi</span>
-        <span>[score placeholder]</span>
+        <div class="header">
+          <div class="word">dictionary</div>
+          <div class="phonetic">dikˈʃenˌeri</div>
+          <div class="score">[score placeholder]</div>
+        </div>      
         <hr />
         <p>
             [example placeholder for api call] <br>
@@ -56,10 +63,9 @@
     </main>
 
     <footer>
-      <hr />
-      <span>Bryce Farley</span>
+      <span class="footer_content">Bryce Farley</span>
       <br />
-      <a href="https://github.com/farleybryce/startup.git">GitHub</a>
+      <a  class="footer_content" href="https://github.com/farleybryce/startup.git">GitHub</a>
     </footer>
     </body>
 </html>
