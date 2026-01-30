@@ -18,6 +18,7 @@ p {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  font-size: larger;
 }
 
 .phonetic {
@@ -28,3 +29,7 @@ p {
   margin-left: auto;
 }
 
+#target {
+    font-size:xx-large;
+    justify-self: center;
+}
