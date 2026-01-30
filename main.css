@@ -11,15 +11,10 @@ menu {
   display: flex;
   flex-direction: row !important;
   list-style: none;
+  justify-content: space-around;
+  padding: 10px;
 }
 
-.navbar-brand {
-  padding-left: 0.3em;
-}
-
-menu .nav-item {
-  padding: 0 0.3em;
-}
 
 header {
   flex: 0 80px;
