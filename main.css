@@ -28,7 +28,7 @@ header {
 }
 
 main {
-  flex: 1 calc(100vh - 110px);
+  flex: 1 calc(100vh - 120px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,3 +53,12 @@ footer {
     position: fixed;
   }
 }
+
+#home_title {
+    padding-bottom: 100px;
+}
+
+.textbox {
+    padding: 8px;
+}
+
