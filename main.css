@@ -62,3 +62,7 @@ footer {
         display: none;
     }
 }
+
+.nav-item :hover {
+    font-size: large;
+}

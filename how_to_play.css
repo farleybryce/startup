@@ -1,0 +1,14 @@
+hr {
+  background-color: rgb(227, 227, 227); 
+  margin-left: 30vw;
+  margin-right: 30vw;
+}
+
+.image_container {
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    padding-left: 10px;
+}
