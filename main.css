@@ -6,6 +6,12 @@
     font-style: normal;
 }
 
+body {
+  display: flex;
+  flex-direction: column; /* Stacks items vertically */
+  height: 100%;
+}
+
 menu {
   flex: 1;
   display: flex;
@@ -18,7 +24,7 @@ menu {
 
 
 header {
-  flex: 0 80px;
+  flex: 0 50px;
 }
 
 main {
@@ -27,14 +33,23 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding-top: 56px;
-  padding: 25px;
+  padding-top: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 footer {
-  bottom: 0;
+  margin: auto;
+  position: relative;
+  bottom: 0; /* Sticks to the bottom of the viewport */
+  width: 100%; /* Spans the full width */
+  /* Add a specific height, e.g., 50px */
+  height: 85px;
+  padding-left: 25px; 
 }
 
-.footer_content {
-    padding: 25px;
+@media (min-width: 768px) {
+  footer {
+    position: fixed;
+  }
 }
