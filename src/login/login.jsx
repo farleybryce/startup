@@ -5,7 +5,7 @@ export function Login() {
     <main className="text-center">
       <br></br>
       <h1 id="home_title">By Definition</h1>
-        <form method="get" action="game.html" id="login">
+        <form method="get" action="game" id="login">
         <div className="textbox">
           <input type="text" placeholder="username" />
         </div>

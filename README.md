@@ -97,9 +97,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [x] **Bundled using Vite** - I did this.
+- [x] **Components** - I have four components, one for each page.
+- [x] **Router** - I route between the different components using links in the header.
 
 ## 🚀 React part 2: Reactivity deliverable
 
