@@ -6,7 +6,7 @@
     font-style: normal;
 }
 
-.body {
+.app {
   display: flex;
   flex-direction: column; /* Stacks items vertically */
   height: 100%;
@@ -31,8 +31,8 @@ main {
   flex: 1 calc(100vh - 130px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  /* align-items: center; */
+  /* justify-content: space-around; */
   padding-top: 50px;
   padding-left: 25px;
   padding-right: 25px;
@@ -53,6 +53,10 @@ footer {
     padding-bottom: 100px;
 }
 
+h1 {
+    font-size: 45px;
+}
+
 .textbox {
     padding: 8px;
 }
@@ -63,6 +67,12 @@ footer {
     }
 }
 
-.nav-item :hover {
+.nav-item:hover {
     font-size: large;
+}
+
+hr {
+  background-color: rgb(227, 227, 227); 
+  margin-left: 25px;
+  margin-right: 25px;
 }

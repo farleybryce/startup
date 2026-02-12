@@ -11,7 +11,7 @@ import { How_To_Play } from './how_to_play/how_to_play';
 export default function App() {
   return (
   <BrowserRouter>
-    <div className="body">
+    <div className="app">
       <header>
         <nav className="navbar fixed-top">
           <menu>
