@@ -28,3 +28,16 @@ p {
     font-size: xx-large;
     text-align: center;
 }
+
+.paragraph_container {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.clickable_paragraph {
+  line-height: 1.5;
+  word-wrap: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
