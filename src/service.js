@@ -1,4 +1,4 @@
-async function getEntry(word) {
+export async function getEntry(word) {
     try {
         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
         if (!response.ok) {
@@ -12,7 +12,7 @@ async function getEntry(word) {
     }
 }
 
-function getPhonetic(entry) {
+export function getPhonetic(entry) {
     if (entry.phonetic) return entry.phonetic || '';
 
     const phoneticObj = entry.phonetics?.find(p => p.text);

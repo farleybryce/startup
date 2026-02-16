@@ -1,21 +1,21 @@
 import React from 'react';
 import './game.css';
+import  {getEntry, getPhonetic} from '../service'
 
 export function Game() {
   
 
-  const [clickedWord, setClickedWord] = React.useState("");
+  const [clickedWord, setClickedWord] = React.useState("dictionary");
+  const [wordPhonetic, setPhonetic] = React.useState("dikˈʃenˌeri");
 
-  const handleClick = (event) => {
-    const selection = window.getSelection();
-    let word = selection.toString().trim();
+  async function updateEntry(word) {
+    
+    const entry = await getEntry(word);
+    const phonetic = getPhonetic(entry);
+    setClickedWord(word);
+    setPhonetic(phonetic)
+  }
 
-    if (word) {
-      // Only take the first word if multiple selected
-      word = word.split(/\s+/)[0];
-      setClickedWord(word);
-    }
-  };
 
   const paragraph =  "1. A reference work with a list of words from one or more languages, normally ordered alphabetically, explaining each word's meaning, and sometimes containing information on its etymology, pronunciation, usage, translations, and other data."
 
@@ -31,7 +31,7 @@ export function Game() {
         <br></br>
         <div className="header">
           <div className="word" id='current_word'>{clickedWord}</div>
-          <div className="phonetic" id='phoneetic'>dikˈʃenˌeri</div>
+          <div className="phonetic" id='phoneetic'>{wordPhonetic}</div>
           <div className="score" id='score'>[score]</div>
         </div>      
         <hr/>
@@ -41,7 +41,7 @@ export function Game() {
               <span
                 className='clickable_word'
                 key={idx}
-                onClick={() => setClickedWord(word.replace(/[.,!?]/g,""))}
+                onClick={() => updateEntry(word.replace(/('s\b|[.,!?])/g, ""))}
                 style={{ cursor: "pointer"}}
               >
                 {word}
