@@ -18,3 +18,21 @@ export function getPhonetic(entry) {
     const phoneticObj = entry.phonetics?.find(p => p.text);
     return phoneticObj?.text || '';
 }
+
+function getAllDefinitions(entry) {
+  return entry.meanings?.flatMap(
+    meaning => meaning.definitions ?? []
+  )
+  .map(def => def.definition ?? "")
+  .filter(Boolean) ?? [];
+}
+
+
+export function convertDefinitionsToString(entry) {
+    const definitions = getAllDefinitions(entry);
+    let defParagraph = ""
+    for (let i = 0; i < definitions.length; i++) {
+        defParagraph += `${i+1}. ${definitions[i]}\n`;
+    }
+    return defParagraph;
+}
