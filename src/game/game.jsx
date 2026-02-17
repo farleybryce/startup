@@ -7,7 +7,7 @@ export function Game() {
 
   const [clickedWord, setClickedWord] = React.useState("dictionary");
   const [wordPhonetic, setPhonetic] = React.useState("dikˈʃenˌeri");
-  const [paragraph, setDefinition] = React.useState("This is some text to click on. dictionary")
+  const [paragraph, setDefinition] = React.useState("This is some text to click on. dictionary cobalt velvet harbor run set off")
 
   async function updateEntry(word) {
     
@@ -43,7 +43,7 @@ export function Game() {
               <span
                 className='clickable_word'
                 key={idx}
-                onClick={() => updateEntry(word.replace(/('s\b|[.,!?;"()])/g, "").toLowerCase())}
+                onClick={() => updateEntry(word.replace(/('s\b|[.,!?;"():])/g, "").toLowerCase())}
                 style={{ cursor: "pointer"}}
               >
                 {word}
