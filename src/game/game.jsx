@@ -8,6 +8,7 @@ export function Game() {
   const [clickedWord, setClickedWord] = React.useState("dictionary");
   const [wordPhonetic, setPhonetic] = React.useState("dikˈʃenˌeri");
   const [paragraph, setDefinition] = React.useState("This is some text to click on. dictionary cobalt velvet harbor run set off")
+  const [score, setScore] = React.useState(0);
 
   async function updateEntry(word) {
     
@@ -18,6 +19,7 @@ export function Game() {
     setClickedWord(word);
     setPhonetic(phonetic);
     setDefinition(definition);
+    setScore(prev => prev + 1);
   }
 
   return (
@@ -33,7 +35,7 @@ export function Game() {
         <div className="header">
           <div className="word" id='current_word'>{clickedWord}</div>
           <div className="phonetic" id='phoneetic'>{wordPhonetic}</div>
-          <div className="score" id='score'>[score]</div>
+          <div className="score" id='score'>Score: {score}</div>
         </div>      
         <hr/>
         <div className='paragraph_container'>
