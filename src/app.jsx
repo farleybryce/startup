@@ -7,8 +7,13 @@ import { Login } from './login/login';
 import { Game } from './game/game';
 import { Leaderboard } from './leaderboard/leaderboard';
 import { How_To_Play } from './how_to_play/how_to_play';
+import { AuthState } from './login/authState';
 
 export default function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
   <BrowserRouter>
     <div className="app">
@@ -28,7 +33,15 @@ export default function App() {
       
 
       <Routes>
-        <Route path='/' element={<Login />} exact />
+        <Route path='/' element={
+          <Login 
+            userName={userName}
+            authState={authState}
+            onAuthChange={(userName, authState) => {
+              setAuthState(authState);
+              setUserName(userName);
+            }}/>} exact 
+          />
         <Route path='/game' element={<Game />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/how_to_play' element={<How_To_Play />} />
