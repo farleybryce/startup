@@ -21,16 +21,21 @@ export function Unauthenticated(props) {
   return (
     <>
       <div className='text-center'>
-        <div className='input-group mb-3'>
+        {/* <div className='input-group mb-3'> */}
           <input type='text' value={userName} onChange={(e) => setUserName(e.target.value)} placeholder='your@email.com' />
-        </div>
-        <div className='input-group mb-3'>
+        {/* </div> */}
+        <br></br>
+        <br></br>
+        {/* <div className='input-group mb-3'> */}
           <input type='password' onChange={(e) => setPassword(e.target.value)} placeholder='password' />
-        </div>
-        <Button variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>
+        {/* </div> */}
+        <br></br>
+        <br></br>
+        <Button variant='light' onClick={() => loginUser()} disabled={!userName || !password}>
           Login
         </Button>
-        <Button variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
+        <span> </span>
+        <Button variant="btn btn-outline-light" onClick={() => createUser()} disabled={!userName || !password}>
           Create
         </Button>
       </div>
