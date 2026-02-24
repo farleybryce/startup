@@ -1,14 +1,25 @@
 import React from 'react';
 import './game.css';
-import  {convertDefinitionsToString, getEntry, getPhonetic} from '../service'
+import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
+import { getTargetInfo } from './target_info';
 
 export function Game() {
+  const [startWord, targetWord] = getTargetInfo() ?? ["start", "target"];
   
-
-  const [clickedWord, setClickedWord] = React.useState("dictionary");
-  const [wordPhonetic, setPhonetic] = React.useState("dikˈʃenˌeri");
-  const [paragraph, setDefinition] = React.useState("This is some text to click on. dictionary cobalt velvet harbor run set off")
+  const [clickedWord, setClickedWord] = React.useState(startWord);
+  const [wordPhonetic, setPhonetic] = React.useState("");
+  const [paragraph, setDefinition] = React.useState("")
   const [score, setScore] = React.useState(0);
+
+  React.useEffect(() => {
+    async function loadStartWord() {
+      const entry = await getEntry(startWord);
+      setPhonetic(getPhonetic(entry));
+      setDefinition(convertDefinitionsToString(entry));
+    }
+
+    loadStartWord();
+  }, [startWord]);
 
   async function updateEntry(word) {
     
@@ -20,16 +31,57 @@ export function Game() {
     setPhonetic(phonetic);
     setDefinition(definition);
     setScore(prev => prev + 1);
+
+    
   }
 
+  /*
+  async function saveScore(score) {
+    const newScore = {name: userName, score: score};
+
+    // Let other players know the game has concluded
+    GameNotifier.broadcastEvent(userName, GameEvent.End, newScore);
+
+    updateScoresLocal(newScore);
+  }
+
+
+  function updateScoresLocal(newScore) {
+    let scores = [];
+    const scoresText = localStorage.getItem('scores');
+    if (scoresText) {
+      scores = JSON.parse(scoresText);
+    }
+
+    let found = false;
+    for (const [i, prevScore] of scores.entries()) {
+      if (newScore.score < prevScore.score) {
+        scores.splice(i, 0, newScore);
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      scores.push(newScore);
+    }
+
+    if (scores.length > 10) {
+      scores.length = 10;
+    }
+
+    localStorage.setItem('scores', JSON.stringify(scores));
+  }
+  */
+  
   return (
     <main>
         <h1 className="text-center">By Definition</h1>
         <br></br>
         <div id="target">
-          <span>Start</span> 
+          <span>{startWord}</span> 
           <span> → </span>
-          <span>Target</span>
+          <span>{targetWord}</span>
         </div>
         <br></br>
         <div className="header">
