@@ -21,11 +21,11 @@ export default function App() {
         <nav className="navbar fixed-top">
           <menu>
             <li className="nav-item"><NavLink to="/">Home</NavLink></li>
-            <li className="vert_bar">|</li>
-            <li className="nav-item"><NavLink to="game">Daily Game</NavLink></li>
-            <li className="vert_bar">|</li>
-            <li className="nav-item"><NavLink to="leaderboard">Leaderboard</NavLink></li>
-            <li className="vert_bar">|</li>
+            {authState === AuthState.Authenticated && (<li className="vert_bar">|</li>)}
+            {authState === AuthState.Authenticated && (<li className="nav-item"><NavLink to="game">Daily Game</NavLink></li>)}
+            {authState === AuthState.Authenticated && (<li className="vert_bar">|</li>)}
+            {authState === AuthState.Authenticated && (<li className="nav-item"><NavLink to="leaderboard">Leaderboard</NavLink></li>)}
+            {authState === AuthState.Authenticated && (<li className="vert_bar">|</li>)}
             <li className="nav-item"><NavLink to="how_to_play">How to Play</NavLink></li>
           </menu>
         </nav>
