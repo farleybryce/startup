@@ -49,7 +49,7 @@ export default function App() {
       </Routes>
 
       <footer>
-        <div className="footer_content">Logged in as: [user]</div>
+        {authState === AuthState.Authenticated && (<div className="footer_content">Logged in as: {userName}</div>)}
         <div className="footer_content">Author: Bryce Farley</div>
         <a  className="footer_content" href="https://github.com/farleybryce/startup.git">GitHub</a>
       </footer>
