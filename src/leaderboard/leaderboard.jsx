@@ -1,12 +1,45 @@
 import React from 'react';
 import './leaderboard.css';
+import { getDate } from '../date_score';
 
 
 export function Leaderboard() {
+
+  const [scores, setScores] = React.useState([]);
+  const [date, setDate] = React.useState("");
+
+  React.useEffect(() => {
+    const scoresText = localStorage.getItem('scores');
+    if (scoresText) {
+      setScores(JSON.parse(scoresText));
+    }
+    setDate(getDate());
+  }, []);
+
+  const scoreRows = [];
+  if (scores.length) {
+    for (const [i, score] of scores.entries()) {
+      scoreRows.push(
+        <tr key={i}>
+          <td>{i}</td>
+          <td>{score.name.split('@')[0]}</td>
+          <td>{score.score}</td>
+          <td>{score.date}</td>
+        </tr>
+      );
+    }
+  } else {
+    scoreRows.push(
+      <tr key='0'>
+        <td colSpan='4'>No Scores Yet</td>
+      </tr>
+    );
+  }  
+  
   return (
     <main className="text-center">
       <h1>By Definition</h1>
-      <h2>1/23/2026</h2>
+      <h2>{date}</h2>
       <table className='table'>
         <thead className='table-group-divider'>
           <tr>
@@ -15,24 +48,7 @@ export function Leaderboard() {
             <th>Score</th>
           </tr>
         </thead>
-        <tbody className='table-group-divider'>
-          <tr>
-            <td>1</td>
-            <td>user1</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>user5</td>
-            <td>12</td>
-
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>user4</td>
-            <td>17</td>
-          </tr>
-        </tbody>
+        <tbody className='table-group-divider' id='scores'>{scoreRows}</tbody>
       </table>
     </main>
   );
