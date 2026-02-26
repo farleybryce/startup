@@ -3,7 +3,7 @@ import './game.css';
 import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
 import { getTargetInfo } from './target_info';
 
-export function Game() {
+export function Game({userName}) {
   const [startWord, targetWord] = getTargetInfo() ?? ["start", "target"];
   
   const [targetReached, setTargetReached] = React.useState(false);
@@ -29,10 +29,12 @@ export function Game() {
     setClickedWord(word);
     setPhonetic(phonetic);
     setDefinition(definition);
-    setScore(prev => prev + 1);
+    const newScore = score + 1;
+    setScore(newScore);
 
-    if (word === targetWord) {
+    if (!targetReached && word === targetWord) {
       setTargetReached(true);
+      saveScore(newScore);
     }    
 
   }
@@ -63,6 +65,41 @@ export function Game() {
     localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [clickedWord, wordPhonetic, paragraph, score]);
 
+  async function saveScore(score) {
+    const newScore = { name: userName, score: score };
+
+    // Let other players know the game has concluded
+    // GameNotifier.broadcastEvent(userName, GameEvent.End, newScore);
+
+    updateScoresLocal(newScore);
+  }
+
+  function updateScoresLocal(newScore) {
+    let scores = [];
+    const scoresText = localStorage.getItem('scores');
+    if (scoresText) {
+      scores = JSON.parse(scoresText);
+    }
+
+    let found = false;
+    for (const [i, prevScore] of scores.entries()) {
+      if (newScore.score < prevScore.score) {
+        scores.splice(i, 0, newScore);
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      scores.push(newScore);
+    }
+
+    if (scores.length > 10) {
+      scores.length = 10;
+    }
+
+    localStorage.setItem('scores', JSON.stringify(scores));
+  }
 
   return (
     <main>
