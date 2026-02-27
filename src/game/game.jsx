@@ -2,7 +2,7 @@ import React from 'react';
 import './game.css';
 import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
 import { getTargetInfo } from './target_info';
-import { getDate } from '../date_score';
+import { getDate } from '../date';
 import { Players } from './players';
 import { GameNotifier, GameEvent } from './gameNotifier';
 

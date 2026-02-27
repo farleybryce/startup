@@ -1,6 +1,5 @@
 import React from 'react';
 import { GameEvent, GameNotifier } from './gameNotifier';
-// import './players.css';
 
 export function Players() {
   const [playerWords, setPlayerWords] = React.useState({});

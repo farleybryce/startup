@@ -1,4 +1,4 @@
-import { getDate } from "../date_score";
+import { getDate } from "../date";
 
 let targetInfo = {
   "2026-02-24": ["quickly", "mountain"],

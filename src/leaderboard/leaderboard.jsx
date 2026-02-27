@@ -1,7 +1,6 @@
 import React from 'react';
 import './leaderboard.css';
-import { getDate } from '../date_score';
-
+import { getDate } from '../date';
 
 export function Leaderboard() {
 
