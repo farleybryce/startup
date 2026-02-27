@@ -4,7 +4,7 @@ let targetInfo = {
   "2026-02-24": ["quickly", "mountain"],
   "2026-02-25": ["blue", "whisper"],
   "2026-02-26": ["start", "target"],
-  "2026-02-27": ["curious", "fox"],
+  "2026-02-27": ["start", "target"],
   "2026-02-28": ["bright", "idea"],
   "2026-03-01": ["jump", "gracefully"],
   "2026-03-02": ["ancient", "library"],

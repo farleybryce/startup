@@ -2,6 +2,7 @@ import React from 'react';
 import './game.css';
 import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
 import { getTargetInfo } from './target_info';
+import { getDate } from '../date_score';
 
 export function Game({userName}) {
   const [startWord, targetWord] = getTargetInfo() ?? ["start", "target"];
@@ -40,30 +41,38 @@ export function Game({userName}) {
   }
 
   React.useEffect(() => {
-    const saved = localStorage.getItem("gameState");
-    if (!saved) {
-      loadStartWord();
-      return;
-    };
+  const today = getDate();
+  const key = `gameState_${userName}_${today}`;
 
-    const data = JSON.parse(saved);
+  const saved = localStorage.getItem(key);
+  if (!saved) {
+    loadStartWord();
+    return;
+  }
 
-    setClickedWord(data.clickedWord);
-    setPhonetic(data.wordPhonetic);
-    setDefinition(data.paragraph);
-    setScore(data.score);
-  }, []);
+  const data = JSON.parse(saved);
+
+  setClickedWord(data.clickedWord);
+  setPhonetic(data.wordPhonetic);
+  setDefinition(data.paragraph);
+  setScore(data.score);
+  setTargetReached(data.targetReached);
+  }, [userName]);
 
   React.useEffect(() => {
+    const today = getDate();
+    const key = `gameState_${userName}_${today}`;
+
     const gameState = {
       clickedWord,
       wordPhonetic,
       paragraph,
       score,
+      targetReached
     };
 
-    localStorage.setItem("gameState", JSON.stringify(gameState));
-  }, [clickedWord, wordPhonetic, paragraph, score]);
+    localStorage.setItem(key, JSON.stringify(gameState));
+  }, [clickedWord, wordPhonetic, paragraph, score, targetReached, userName]);
 
   async function saveScore(score) {
     const newScore = { name: userName, score: score };
@@ -75,8 +84,11 @@ export function Game({userName}) {
   }
 
   function updateScoresLocal(newScore) {
+    const today = getDate();
+    const key = `scores_${today}`;
+    
+    const scoresText = localStorage.getItem(key);
     let scores = [];
-    const scoresText = localStorage.getItem('scores');
     if (scoresText) {
       scores = JSON.parse(scoresText);
     }
@@ -98,7 +110,7 @@ export function Game({userName}) {
       scores.length = 10;
     }
 
-    localStorage.setItem('scores', JSON.stringify(scores));
+    localStorage.setItem(key, JSON.stringify(scores));
   }
 
   return (

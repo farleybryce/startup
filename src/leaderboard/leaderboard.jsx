@@ -8,17 +8,22 @@ export function Leaderboard() {
   const [scores, setScores] = React.useState([]);
   const [date, setDate] = React.useState("");
 
-  React.useEffect(() => {
-    const scoresText = localStorage.getItem('scores');
-    if (scoresText) {
-      try {
-        setScores(JSON.parse(scoresText));
-      } catch (err) {
-        console.error("Invalid scores in localStorage", err);
-      }
-}
-    setDate(getDate());
-  }, []);
+React.useEffect(() => {
+  const today = getDate();
+  setDate(today);
+
+  const scoresText = localStorage.getItem(`scores_${today}`);
+  if (!scoresText) return;
+
+  try {
+    const parsed = JSON.parse(scoresText);
+    if (Array.isArray(parsed)) {
+      setScores(parsed);
+    }
+  } catch (err) {
+    console.error("Invalid scores in localStorage", err);
+  }
+}, []);
 
   const scoreRows = [];
   if (scores.length) {
@@ -26,7 +31,7 @@ export function Leaderboard() {
       scoreRows.push(
         <tr key={i}>
           <td>{i + 1}</td>
-          <td>{score.name.split('@')[0]}</td>
+          <td>{score.name}</td>
           <td>{score.score}</td>
         </tr>
       );
