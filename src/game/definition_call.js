@@ -5,7 +5,7 @@ export async function getEntry(word) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        return data[0];
+        return data;
     } catch (error) {
         console.error('Error fetching the dictionary entry:', error);
         throw error;
@@ -19,12 +19,15 @@ export function getPhonetic(entry) {
     return phoneticObj?.text || '';
 }
 
-function getAllDefinitions(entry) {
-  return entry.meanings?.flatMap(
-    meaning => meaning.definitions ?? []
-  )
-  .map(def => def.definition ?? "")
-  .filter(Boolean) ?? [];
+function getAllDefinitions(entries) {
+  return entries
+    ?.flatMap(entry =>
+      entry.meanings?.flatMap(
+        meaning => meaning.definitions ?? []
+      ) ?? []
+    )
+    .map(def => def.definition ?? "")
+    .filter(Boolean) ?? [];
 }
 
 
