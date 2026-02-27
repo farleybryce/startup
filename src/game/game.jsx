@@ -3,6 +3,8 @@ import './game.css';
 import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
 import { getTargetInfo } from './target_info';
 import { getDate } from '../date_score';
+import { Players } from './players';
+import { GameNotifier, GameEvent } from './gameNotifier';
 
 export function Game({userName}) {
   const [startWord, targetWord] = getTargetInfo() ?? ["start", "target"];
@@ -33,10 +35,12 @@ export function Game({userName}) {
     const newScore = score + 1;
     setScore(newScore);
 
+    GameNotifier.broadcastEvent(userName, GameEvent.System, { currentWord: word });
+
     if (!targetReached && word === targetWord) {
       setTargetReached(true);
       saveScore(newScore);
-    }    
+    }     
 
   }
 
@@ -76,9 +80,6 @@ export function Game({userName}) {
 
   async function saveScore(score) {
     const newScore = { name: userName, score: score };
-
-    // Let other players know the game has concluded
-    // GameNotifier.broadcastEvent(userName, GameEvent.End, newScore);
 
     updateScoresLocal(newScore);
   }
@@ -145,9 +146,7 @@ export function Game({userName}) {
           </p>
         </div>        
         <hr/>
-        <span>[friend activity/websocket placeholder]<br></br></span>
-        <span>user1 is viewing [word]<br></br></span>
-        <span>user2 is viewing [word]<br></br></span>
+          <Players/>
         <br></br>
 
     </main>
