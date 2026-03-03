@@ -33,7 +33,10 @@ export function Game({userName}) {
     setPhonetic(phonetic);
     setDefinition(definition);
     const newScore = score + 1;
-    setScore(newScore);
+    if (!targetReached) {
+      setScore(newScore); 
+    }
+    
 
     GameNotifier.broadcastEvent(userName, GameEvent.System, { currentWord: word });
 
