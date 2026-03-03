@@ -130,7 +130,7 @@ export function Game({userName}) {
         <div className="header">
           <div className="word" id='current_word'>{clickedWord}</div>
           <div className="phonetic" id='phoneetic'>{wordPhonetic}</div>
-          <div className="score" id='score'>Score: {score}</div>
+          <div className="score" id='score' style={{ color: targetReached ? "green" : "inherit" }}>Score: {score}</div>
         </div>      
         <hr/>
         <div className='paragraph_container'>
