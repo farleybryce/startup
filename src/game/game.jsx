@@ -26,7 +26,7 @@ export function Game({userName}) {
   async function updateEntry(word) {
     
     const entry = await getEntry(word);
-    const phonetic = getPhonetic(entry);
+    const phonetic = getPhonetic(entry[0]);
     const definition = convertDefinitionsToString(entry);
 
     setClickedWord(word);
