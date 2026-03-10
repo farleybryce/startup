@@ -11,18 +11,12 @@ React.useEffect(() => {
   const today = getDate();
   setDate(today);
 
-  const scoresText = localStorage.getItem(`scores_${today}`);
-  if (!scoresText) return;
-
-  try {
-    const parsed = JSON.parse(scoresText);
-    if (Array.isArray(parsed)) {
-      setScores(parsed);
-    }
-  } catch (err) {
-    console.error("Invalid scores in localStorage", err);
-  }
-}, []);
+  fetch('/api/scores')
+    .then((response) => response.json())
+    .then((scores) => {
+      setScores(scores);
+    });
+  }, []);
 
   const scoreRows = [];
   if (scores.length) {
