@@ -1,11 +1,6 @@
 import { getDate } from "../date";
 
 let targetInfo = {
-  "2026-02-24": ["quickly", "mountain"],
-  "2026-02-25": ["blue", "whisper"],
-  "2026-02-26": ["smart", "target"],
-  "2026-02-27": ["start", "target"],
-  "2026-02-28": ["bright", "idea"],
   "2026-03-01": ["jump", "gracefully"],
   "2026-03-02": ["ancient", "target"],
   "2026-03-03": ["softly", "glow"],

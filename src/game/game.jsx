@@ -83,38 +83,12 @@ export function Game({userName}) {
 
   async function saveScore(score) {
     const newScore = { name: userName, score: score };
-
-    updateScoresLocal(newScore);
-  }
-
-  function updateScoresLocal(newScore) {
-    const today = getDate();
-    const key = `scores_${today}`;
     
-    const scoresText = localStorage.getItem(key);
-    let scores = [];
-    if (scoresText) {
-      scores = JSON.parse(scoresText);
-    }
-
-    let found = false;
-    for (const [i, prevScore] of scores.entries()) {
-      if (newScore.score < prevScore.score) {
-        scores.splice(i, 0, newScore);
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
-      scores.push(newScore);
-    }
-
-    if (scores.length > 10) {
-      scores.length = 10;
-    }
-
-    localStorage.setItem(key, JSON.stringify(scores));
+    await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(newScore),
+    });
   }
 
   return (
