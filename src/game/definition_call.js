@@ -19,7 +19,7 @@ export function getPhonetic(entry) {
     return phoneticObj?.text || '';
 }
 
-function getAllDefinitions(entries) {
+export function getAllDefinitions(entries) {
   return entries
     ?.flatMap(entry =>
       entry.meanings?.flatMap(
