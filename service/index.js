@@ -1,4 +1,4 @@
-const { getTargetInfo } = require('./wordList.js');
+const { getTargetInfo, getDate } = require('./wordList.js');
 
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
@@ -11,7 +11,7 @@ const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
-let scores = [];
+let scoresByDate = {};
 let userStates = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -78,15 +78,22 @@ const verifyAuth = async (req, res, next) => {
 
 // GetScores
 apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  res.send(scores);
+  const today = getDate();
+  res.send(scoresByDate[today] ?? []);
 });
 
 // SubmitScore
 apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
-});
+  const today = getDate();
 
+  if (!scoresByDate[today]) {
+    scoresByDate[today] = [];
+  }
+
+  scoresByDate[today] = updateScores(scoresByDate[today], req.body);
+
+  res.send(scoresByDate[today]);
+});
 // Get saved game state
 apiRouter.get('/state', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
@@ -139,25 +146,26 @@ app.use((_req, res) => {
 });
 
 // updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
+function updateScores(scoreList, newScore) {
   let found = false;
-  for (const [i, prevScore] of scores.entries()) {
+
+  for (const [i, prevScore] of scoreList.entries()) {
     if (newScore.score < prevScore.score) {
-      scores.splice(i, 0, newScore);
+      scoreList.splice(i, 0, newScore);
       found = true;
       break;
     }
   }
 
   if (!found) {
-    scores.push(newScore);
+    scoreList.push(newScore);
   }
 
-  if (scores.length > 10) {
-    scores.length = 10;
+  if (scoreList.length > 10) {
+    scoreList.length = 10;
   }
 
-  return scores;
+  return scoreList;
 }
 
 async function createUser(username, password) {

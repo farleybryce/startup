@@ -12,7 +12,7 @@ function getTargetInfo() {
   return targetWords[getDate()];
 }
 
-module.exports = { getTargetInfo };
+module.exports = { getTargetInfo, getDate };
 
 let targetWords = {
 // March 2026
@@ -27,7 +27,7 @@ let targetWords = {
 "2026-03-09": ["golden", "horizon"],
 "2026-03-10": ["laugh", "loudly"],
 "2026-03-11": ["quiet", "target"],
-"2026-03-12": ["swift", "runner"],
+"2026-03-12": ["swift", "target"],
 "2026-03-13": ["create", "boldly"],
 "2026-03-14": ["gentle", "breeze"],
 "2026-03-15": ["explore", "freely"],
