@@ -17,6 +17,7 @@ export function Game({userName}) {
   const [paragraph, setDefinition] = React.useState("")
   const [score, setScore] = React.useState(0);
 
+  // Get the words for today's game
   React.useEffect(() => {
   async function fetchTargetWords() {
     const res = await fetch('/api/initialize');
@@ -37,6 +38,7 @@ export function Game({userName}) {
     setDefinition(convertDefinitionsToString(entry));
   }
 
+  // Get the entry that was clicked on
   async function updateEntry(word) {
     
     const entry = await getEntry(word);
@@ -61,6 +63,7 @@ export function Game({userName}) {
 
   }
 
+  // Get the state for the user
   React.useEffect(() => {
     async function loadState() {
       const today = getDate();
@@ -76,7 +79,7 @@ export function Game({userName}) {
       setScore(data.score ?? 0);
       setTargetReached(data.targetReached ?? false);
 
-      const entry = await getEntry(data.clickedWord); // reload definition & phonetic
+      const entry = await getEntry(data.clickedWord);
       setPhonetic(getPhonetic(entry[0]));
       setDefinition(convertDefinitionsToString(entry));
     }
@@ -84,8 +87,9 @@ export function Game({userName}) {
     loadState();
   }, [userName]);
 
+  // Save the state for the user
   React.useEffect(() => {
-    if (!clickedWord || !paragraph) return; // skip save until data is loaded
+    if (!clickedWord || !paragraph) return;
 
     async function saveState() {
       const today = getDate();
