@@ -50,44 +50,36 @@ export function Game({userName}) {
   React.useEffect(() => {
     async function loadState() {
       const today = getDate();
-
       const res = await fetch(`/api/state?date=${today}`);
       const data = await res.json();
 
-      if (!data) {
-        loadStartWord();
+      if (!data || !data.clickedWord) {
+        await loadStartWord();
         return;
       }
 
       setClickedWord(data.clickedWord);
-      setPhonetic(data.wordPhonetic);
-      setDefinition(data.paragraph);
-      setScore(data.score);
-      setTargetReached(data.targetReached);
+      setScore(data.score ?? 0);
+      setTargetReached(data.targetReached ?? false);
+
+      const entry = await getEntry(data.clickedWord); // reload definition & phonetic
+      setPhonetic(getPhonetic(entry[0]));
+      setDefinition(convertDefinitionsToString(entry));
     }
 
     loadState();
   }, [userName]);
 
   React.useEffect(() => {
+    if (!clickedWord || !paragraph) return; // skip save until data is loaded
+
     async function saveState() {
       const today = getDate();
-
-      const gameState = {
-        clickedWord,
-        wordPhonetic,
-        paragraph,
-        score,
-        targetReached
-      };
-
+      const gameState = { clickedWord, wordPhonetic, paragraph, score, targetReached };
       await fetch('/api/state', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          date: today,
-          state: gameState
-        })
+        body: JSON.stringify({ date: today, state: gameState })
       });
     }
 
