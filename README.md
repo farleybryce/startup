@@ -115,9 +115,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Node.js/Express HTTP service** - done
 - [x] **Static middleware for frontend** - done
 - [x] **Calls to third party endpoints** - dictionary api
-- [x] **Backend service endpoints** - saving scores, loading user state, and more
-- [x] **Frontend calls service endpoints** - done
-- [x] **Supports registration, login, logout, and restricted endpoint** - done
+- [x] **Backend service endpoints** - saving scores, loading user state, daily games, etc.
+- [x] **Frontend calls service endpoints** - I did this with fetch
+- [x] **Supports registration, login, logout, and restricted endpoint** - ensures proper registration, login, etc.
 
 ## 🚀 DB deliverable
 
