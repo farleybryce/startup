@@ -48,37 +48,50 @@ export function Game({userName}) {
   }
 
   React.useEffect(() => {
-  const today = getDate();
-  const key = `gameState_${userName}_${today}`;
+    async function loadState() {
+      const today = getDate();
 
-  const saved = localStorage.getItem(key);
-  if (!saved) {
-    loadStartWord();
-    return;
-  }
+      const res = await fetch(`/api/state?date=${today}`);
+      const data = await res.json();
 
-  const data = JSON.parse(saved);
+      if (!data) {
+        loadStartWord();
+        return;
+      }
 
-  setClickedWord(data.clickedWord);
-  setPhonetic(data.wordPhonetic);
-  setDefinition(data.paragraph);
-  setScore(data.score);
-  setTargetReached(data.targetReached);
+      setClickedWord(data.clickedWord);
+      setPhonetic(data.wordPhonetic);
+      setDefinition(data.paragraph);
+      setScore(data.score);
+      setTargetReached(data.targetReached);
+    }
+
+    loadState();
   }, [userName]);
 
   React.useEffect(() => {
-    const today = getDate();
-    const key = `gameState_${userName}_${today}`;
+    async function saveState() {
+      const today = getDate();
 
-    const gameState = {
-      clickedWord,
-      wordPhonetic,
-      paragraph,
-      score,
-      targetReached
-    };
+      const gameState = {
+        clickedWord,
+        wordPhonetic,
+        paragraph,
+        score,
+        targetReached
+      };
 
-    localStorage.setItem(key, JSON.stringify(gameState));
+      await fetch('/api/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date: today,
+          state: gameState
+        })
+      });
+    }
+
+    saveState();
   }, [clickedWord, wordPhonetic, paragraph, score, targetReached, userName]);
 
   async function saveScore(score) {

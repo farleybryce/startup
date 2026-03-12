@@ -9,6 +9,7 @@ const authCookieName = 'token';
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let scores = [];
+let userStates = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -28,24 +29,24 @@ app.use(`/api`, apiRouter);
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  if (await findUser('email', req.body.email)) {
+  if (await findUser('username', req.body.username)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await createUser(req.body.email, req.body.password);
+    const user = await createUser(req.body.username, req.body.password);
 
     setAuthCookie(res, user.token);
-    res.send({ email: user.email });
+    res.send({ username: user.username });
   }
 });
 
 // GetAuth login an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await findUser('email', req.body.email);
+  const user = await findUser('username', req.body.username);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
       setAuthCookie(res, user.token);
-      res.send({ email: user.email });
+      res.send({ username: user.username });
       return;
     }
   }
@@ -83,6 +84,42 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
   res.send(scores);
 });
 
+// Get saved game state
+apiRouter.get('/state', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  const today = req.query.date;
+
+  const state = userStates.find(
+    (s) => s.username === user.username && s.date === today
+  );
+
+  res.send(state ? state.state : null);
+});
+
+// Save game state
+apiRouter.post('/state', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  const { date, state } = req.body;
+
+  const existing = userStates.find(
+    (s) => s.username === user.username && s.date === date
+  );
+
+  if (existing) {
+    existing.state = state;
+  } else {
+    userStates.push({
+      username: user.username,
+      date: date,
+      state: state
+    });
+  }
+
+  res.send({ msg: 'State saved' });
+});
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
@@ -115,11 +152,11 @@ function updateScores(newScore) {
   return scores;
 }
 
-async function createUser(email, password) {
+async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    email: email,
+    username: username,
     password: passwordHash,
     token: uuid.v4(),
   };
