@@ -1,3 +1,5 @@
+const { getTargetInfo } = require('./wordList.js');
+
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
@@ -5,6 +7,7 @@ const uuid = require('uuid');
 const app = express();
 
 const authCookieName = 'token';
+
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
@@ -118,6 +121,11 @@ apiRouter.post('/state', verifyAuth, async (req, res) => {
   }
 
   res.send({ msg: 'State saved' });
+});
+
+// Get start and target words
+apiRouter.get('/initialize', verifyAuth, async (req, res) => {
+    res.send(getTargetInfo());
 });
 
 // Default error handler

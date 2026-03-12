@@ -1,3 +1,19 @@
+function getDate() {
+  return new Date().toLocaleDateString("en-CA", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+}
+
+
+function getTargetInfo() {
+  return targetWords[getDate()];
+}
+
+module.exports = { getTargetInfo };
+
 let targetWords = {
 // March 2026
 "2026-03-01": ["jump", "gracefully"],
@@ -10,7 +26,7 @@ let targetWords = {
 "2026-03-08": ["think", "deeply"],
 "2026-03-09": ["golden", "horizon"],
 "2026-03-10": ["laugh", "loudly"],
-"2026-03-11": ["quiet", "forest"],
+"2026-03-11": ["quiet", "target"],
 "2026-03-12": ["swift", "runner"],
 "2026-03-13": ["create", "boldly"],
 "2026-03-14": ["gentle", "breeze"],

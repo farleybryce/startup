@@ -1,13 +1,14 @@
 import React from 'react';
 import './game.css';
 import  {convertDefinitionsToString, getEntry, getPhonetic} from './definition_call'
-import { getTargetInfo } from './target_info';
+// import { getTargetInfo } from './target_info';
 import { getDate } from '../date';
 import { Players } from './players';
 import { GameNotifier, GameEvent } from './gameNotifier';
 
 export function Game({userName}) {
-  const [startWord, targetWord] = getTargetInfo() ?? ["start", "target"];
+  const [startWord, setStartWord] = React.useState("start");
+  const [targetWord, setTargetWord] = React.useState("target");
   
   const [targetReached, setTargetReached] = React.useState(false);
   
@@ -15,6 +16,19 @@ export function Game({userName}) {
   const [wordPhonetic, setPhonetic] = React.useState("");
   const [paragraph, setDefinition] = React.useState("")
   const [score, setScore] = React.useState(0);
+
+  React.useEffect(() => {
+  async function fetchTargetWords() {
+    const res = await fetch('/api/initialize');
+    if (!res.ok) return;
+    const [start, target] = await res.json();
+    setStartWord(start);
+    setTargetWord(target);
+    setClickedWord(start);
+  }
+  fetchTargetWords();
+  loadStartWord();
+  }, []);
 
 
   async function loadStartWord() {
