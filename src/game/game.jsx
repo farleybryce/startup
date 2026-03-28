@@ -26,17 +26,12 @@ export function Game({userName}) {
     setStartWord(start);
     setTargetWord(target);
     setClickedWord(start);
-  }
-  fetchTargetWords();
-  loadStartWord();
-  }, []);
-
-
-  async function loadStartWord() {
-    const entry = await getEntry(startWord);
+    const entry = await getEntry(start);
     setPhonetic(getPhonetic(entry));
     setDefinition(convertDefinitionsToString(entry));
   }
+  fetchTargetWords();
+  }, []);
 
   // Get the entry that was clicked on
   async function updateEntry(word) {
