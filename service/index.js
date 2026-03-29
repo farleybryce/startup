@@ -73,21 +73,25 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
+apiRouter.get('/scores', verifyAuth, async (_req, res) => {
   const today = getDate();
-  scoresObj = DB.getScores(today);
+  scoresObj = await DB.getScores(today);
   res.send(scoresObj.scores ?? []);
 });
 
 // SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
+apiRouter.post('/score', verifyAuth, async (req, res) => {
   const today = getDate();
 
-  scoresObj = DB.getScores(today);
+  scoresObj = await DB.getScores(today);
 
-  scoresObj = updateScores(scoresObj.scores, req.body);
+  const existingScores = scoresObj?.scores ?? [];
 
-  res.send(scoresObj.scores);
+  scores = updateScores(existingScores, req.body);
+
+  await DB.saveScores(today, scores);
+
+  res.send(scores);
 });
 
 // Get saved game state
