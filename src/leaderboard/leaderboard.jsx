@@ -24,7 +24,7 @@ React.useEffect(() => {
       scoreRows.push(
         <tr key={i}>
           <td>{i + 1}</td>
-          <td>{score.name}</td>
+          <td>{score.username}</td>
           <td>{score.score}</td>
         </tr>
       );

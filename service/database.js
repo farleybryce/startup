@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
 const scoreCollection = db.collection('score');
-const stateCollection = db.colleciton('state');
+const stateCollection = db.collection('state');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -47,9 +47,23 @@ async function saveState(username, date, state) {
   );
 }
 
-async function getState(username, date) {
+function getState(username, date) {
   return stateCollection.findOne({ username: username, date: date });
 }
+
+async function saveScores(date, scoresList) {
+    await scoreCollection.updateOne(
+        { date: date },
+        { $set: { scores: scoresList } },
+        { upsert: true }
+    )
+}
+
+function getScores(date) {
+  return scoreCollection.findOne({ date: date });
+}
+
+
 
 module.exports = {
   getUser,
@@ -58,5 +72,7 @@ module.exports = {
   updateUser,
   updateUserRemoveAuth,
   saveState,
-  getState
+  getState,
+  saveScores,
+  getScores
 };

@@ -9,11 +9,6 @@ const DB = require('./database.js');
 
 const authCookieName = 'token';
 
-
-// The scores and users are saved in memory and disappear whenever the service is restarted.
-let scoresByDate = {};
-let userStates = [];
-
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -80,20 +75,19 @@ const verifyAuth = async (req, res, next) => {
 // GetScores
 apiRouter.get('/scores', verifyAuth, (_req, res) => {
   const today = getDate();
-  res.send(scoresByDate[today] ?? []);
+  scoresObj = DB.getScores(today);
+  res.send(scoresObj.scores ?? []);
 });
 
 // SubmitScore
 apiRouter.post('/score', verifyAuth, (req, res) => {
   const today = getDate();
 
-  if (!scoresByDate[today]) {
-    scoresByDate[today] = [];
-  }
+  scoresObj = DB.getScores(today);
 
-  scoresByDate[today] = updateScores(scoresByDate[today], req.body);
+  scoresObj = updateScores(scoresObj.scores, req.body);
 
-  res.send(scoresByDate[today]);
+  res.send(scoresObj.scores);
 });
 
 // Get saved game state
@@ -102,7 +96,7 @@ apiRouter.get('/state', verifyAuth, async (req, res) => {
 
   const date = req.query.date;
 
-  const userState = DB.getState(user.username, date);
+  const userState = await DB.getState(user.username, date);
 
   res.send(userState ? userState.state : null);
 });

@@ -104,7 +104,7 @@ export function Game({userName}) {
   }, [clickedWord, wordPhonetic, paragraph, score, targetReached, userName]);
 
   async function saveScore(score) {
-    const newScore = { name: userName, score: score };
+    const newScore = { username: userName, score: score };
     
     await fetch('/api/score', {
       method: 'POST',

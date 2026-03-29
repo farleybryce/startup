@@ -44,8 +44,8 @@ let targetWords = {
 "2026-03-25": ["towards", "matter"],
 "2026-03-26": ["vocal", "against"],
 "2026-03-27": ["merely", "structure"],
-"2026-03-28": ["surface", "target"],
-"2026-03-29": ["rigid", "amongst"],
+"2026-03-28": ["surface", "curl"],
+"2026-03-29": ["rigid", "target"],
 "2026-03-30": ["unless", "motion"],
 "2026-03-31": ["briefly", "hollow"],
 
