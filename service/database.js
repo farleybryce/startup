@@ -18,3 +18,23 @@ const statesCollection = db.colleciton('state');
     process.exit(1);
   }
 })();
+
+function getUser(email) {
+  return userCollection.findOne({ email: email });
+}
+
+function getUserByToken(token) {
+  return userCollection.findOne({ token: token });
+}
+
+async function addUser(user) {
+  await userCollection.insertOne(user);
+}
+
+async function updateUser(user) {
+  await userCollection.updateOne({ email: user.email }, { $set: user });
+}
+
+async function updateUserRemoveAuth(user) {
+  await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } });
+}

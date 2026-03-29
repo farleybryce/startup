@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const DB = require('./database.js');  
 
 const authCookieName = 'token';
 
@@ -42,25 +43,26 @@ apiRouter.post('/auth/create', async (req, res) => {
   }
 });
 
-// GetAuth login an existing user
+// GetAuth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await findUser('username', req.body.username);
+  const user = await findUser('email', req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
-      res.send({ username: user.username });
+      res.send({ email: user.email });
       return;
     }
   }
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
-// DeleteAuth logout a user
+// DeleteAuth token if stored in cookie
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
-    delete user.token;
+    await DB.updateUserRemoveAuth(user);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -168,15 +170,15 @@ function updateScores(scoreList, newScore) {
   return scoreList;
 }
 
-async function createUser(username, password) {
+async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    username: username,
+    email: email,
     password: passwordHash,
     token: uuid.v4(),
   };
-  users.push(user);
+  await DB.addUser(user);
 
   return user;
 }
@@ -184,7 +186,10 @@ async function createUser(username, password) {
 async function findUser(field, value) {
   if (!value) return null;
 
-  return users.find((u) => u[field] === value);
+  if (field === 'token') {
+    return DB.getUserByToken(value);
+  }
+  return DB.getUser(value);
 }
 
 // setAuthCookie in the HTTP response
