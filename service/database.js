@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
 const scoreCollection = db.collection('score');
-const statesCollection = db.colleciton('state');
+const stateCollection = db.colleciton('state');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -19,8 +19,8 @@ const statesCollection = db.colleciton('state');
   }
 })();
 
-function getUser(email) {
-  return userCollection.findOne({ email: email });
+function getUser(username) {
+  return userCollection.findOne({ username: username });
 }
 
 function getUserByToken(token) {
@@ -32,9 +32,31 @@ async function addUser(user) {
 }
 
 async function updateUser(user) {
-  await userCollection.updateOne({ email: user.email }, { $set: user });
+  await userCollection.updateOne({ username: user.username }, { $set: user });
 }
 
 async function updateUserRemoveAuth(user) {
-  await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } });
+  await userCollection.updateOne({ username: user.username }, { $unset: { token: 1 } });
 }
+
+async function saveState(username, date, state) {
+  await stateCollection.updateOne(
+    { username: username, date: date },
+    { $set: { state: state } },
+    { upsert: true }
+  );
+}
+
+async function getState(username, date) {
+  return stateCollection.findOne({ username: username, date: date });
+}
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  addUser,
+  updateUser,
+  updateUserRemoveAuth,
+  saveState,
+  getState
+};

@@ -11,7 +11,6 @@ const authCookieName = 'token';
 
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
 let scoresByDate = {};
 let userStates = [];
 
@@ -45,13 +44,13 @@ apiRouter.post('/auth/create', async (req, res) => {
 
 // GetAuth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await findUser('email', req.body.email);
+  const user = await findUser('username', req.body.username);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
       await DB.updateUser(user);
       setAuthCookie(res, user.token);
-      res.send({ email: user.email });
+      res.send({ username: user.username });
       return;
     }
   }
@@ -96,17 +95,16 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
 
   res.send(scoresByDate[today]);
 });
+
 // Get saved game state
 apiRouter.get('/state', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
 
-  const today = req.query.date;
+  const date = req.query.date;
 
-  const state = userStates.find(
-    (s) => s.username === user.username && s.date === today
-  );
+  const userState = DB.getState(user.username, date);
 
-  res.send(state ? state.state : null);
+  res.send(userState ? userState.state : null);
 });
 
 // Save game state
@@ -115,19 +113,7 @@ apiRouter.post('/state', verifyAuth, async (req, res) => {
 
   const { date, state } = req.body;
 
-  const existing = userStates.find(
-    (s) => s.username === user.username && s.date === date
-  );
-
-  if (existing) {
-    existing.state = state;
-  } else {
-    userStates.push({
-      username: user.username,
-      date: date,
-      state: state
-    });
-  }
+  await DB.saveState(user.username, date, state);
 
   res.send({ msg: 'State saved' });
 });
@@ -170,11 +156,11 @@ function updateScores(scoreList, newScore) {
   return scoreList;
 }
 
-async function createUser(email, password) {
+async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    email: email,
+    username: username,
     password: passwordHash,
     token: uuid.v4(),
   };
