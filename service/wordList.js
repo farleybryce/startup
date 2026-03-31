@@ -47,7 +47,7 @@ let targetWords = {
 "2026-03-28": ["surface", "curl"],
 "2026-03-29": ["rigid", "target"],
 "2026-03-30": ["unless", "motion"],
-"2026-03-31": ["briefly", "hollow"],
+"2026-03-31": ["briefly", "music"],
 
 // April 2026
 "2026-04-01": ["attribute", "utterly"],
