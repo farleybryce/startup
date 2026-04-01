@@ -6,7 +6,6 @@ export function Players() {
 
   React.useEffect(() => {
     function handleGameEvent(event) {
-      console.log("React got: ", event);
       if (event.type === GameEvent.System && event.value?.currentWord) {
         setPlayerWords(prev => ({
           ...prev,
