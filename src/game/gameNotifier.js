@@ -25,17 +25,24 @@ class GameEventNotifier {
     this.socket.onclose = (event) => {
       this.receiveEvent(new EventMessage('Startup', GameEvent.System, { msg: 'disconnected' }));
     };
-    this.socket.onmessage = async (msg) => {
+    this.socket.onmessage = (msg) => {
+      console.log("RAW RECEIVED:", msg.data);
+
       try {
-        const event = JSON.parse(await msg.data.text());
+        const event = JSON.parse(msg.data);
+        console.log("PARSED EVENT:", event);
+
         this.receiveEvent(event);
-      } catch {}
+      } catch (e) {
+        console.error("PARSE FAILED:", e, msg.data);
+      }
     };
   }
 
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
-    this.receiveEvent(event);
+    this.socket.send(JSON.stringify(event));
+    console.log("Sending: ", event);
   }
 
   addHandler(handler) {
@@ -49,6 +56,7 @@ class GameEventNotifier {
   receiveEvent(event) {
     this.events.push(event);
     this.handlers.forEach(handler => handler(event));
+    console.log("Dispatched event: ", event);
   }
 }
 
