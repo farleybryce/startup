@@ -10,25 +10,27 @@ class EventMessage {
   }
 }
 
-const randomWords = [
-  "crimson", "whistle", "jungle", "flicker", "marble", "tangle", "orbit", "quiver", "paddle", "glimpse",
-  "ripple", "blizzard", "cobble", "sparkle", "drift", "thunder", "latch", "mingle", "breeze", "hollow",
-  "flutter", "glisten", "shard", "twist", "echo", "wobble", "pebble", "sprint", "quaint", "frost",
-  "meadow", "plume", "shimmer", "vault", "cascade", "whimsy", "cinder", "fumble", "gauge", "hatch",
-  "tremble", "verdant", "pioneer", "murmur", "swoop", "fable", "glint", "wander", "sprout", "crackle"
-];
 
 class GameEventNotifier {
   events = [];
   handlers = [];
 
   constructor() {
-    const users = ['Bryce', 'Larry', 'Bob', 'John', 'Susan'];
-    setInterval(() => {
-      const word = randomWords[Math.floor(Math.random() * randomWords.length)];
-      const userName = users[Math.floor(Math.random() * users.length)];
-      this.broadcastEvent(userName, GameEvent.System, { currentWord: word });
-    }, 5000);
+    let port = window.location.port;
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
+    this.socket.onopen = (event) => {
+      this.receiveEvent(new EventMessage('Startup', GameEvent.System, { msg: 'connected' }));
+    };
+    this.socket.onclose = (event) => {
+      this.receiveEvent(new EventMessage('Startup', GameEvent.System, { msg: 'disconnected' }));
+    };
+    this.socket.onmessage = async (msg) => {
+      try {
+        const event = JSON.parse(await msg.data.text());
+        this.receiveEvent(event);
+      } catch {}
+    };
   }
 
   broadcastEvent(from, type, value) {
