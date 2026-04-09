@@ -24,7 +24,7 @@ let targetWords = {
 "2026-04-06": ["given", "adorn"],
 "2026-04-07": ["office", "wish"],
 "2026-04-08": ["pursuit", "kick"],
-"2026-04-09": ["specific", "buffoon"],
+"2026-04-09": ["specific", "fool"],
 "2026-04-10": ["adjective", "hazard"],
 "2026-04-11": ["entertainment", "crime"],
 "2026-04-12": ["knowledge", "sweat"],
